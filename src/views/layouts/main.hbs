@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>head}}
+<body>
+    {{{body}}}
+
+    {{#unless hideFooter}}
+        {{> footer}}  <!-- Include the footer only if `hideFooter` is NOT true -->
+    {{/unless}}
+</body>
+</html>

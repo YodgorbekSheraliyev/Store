@@ -1,0 +1,23 @@
+<div class="container">
+        <form class="signup_form" action="/login" method="POST", novalidate>
+            <h2>Login</h2>
+            <div class="form-group">
+                {{#if errors}}
+                    {{#each errors}}
+                        <h3 style="text-align: center; color: red"> {{this}}</h3>
+                    {{/each}}
+                {{/if}}
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="example@mail.com" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+                <a href="">Dont have an account? Register</a>
+            </div>
+        </form>
+        <div id="message"></div>
+    </div>
