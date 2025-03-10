@@ -69,4 +69,4 @@ app.get("/home", authorized, (req, res) => {
 
 const port: number | string = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Server running on port: ${port}`));
+app.listen(port, () => console.log(`http://localhost:${port}`));

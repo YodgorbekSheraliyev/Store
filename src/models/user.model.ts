@@ -1,28 +1,18 @@
-import mongoose from "mongoose"
+import mongoose, {Schema} from "mongoose"
 
-interface IUser  {
-    first_name: string,
-    last_name: string,
-    email: string,
-    verify_email_token: string,
-    verify_email_token_time: string,
-    phone: string,
-    orders: string[]
-}
 
-const userSchema = new mongoose.Schema({
+const userSchema: Schema = new mongoose.Schema({
     first_name: {type: String},
     last_name: {type: String},
     email: {type: String, required: true, unique: true},
     verify_email_token: {type: String},
-    verify_email_token_time: {type: Date},
+    verify_email_token_time: {type: Number, default: 60*60*5},
     phone: {type: String, required: true, unique: true},
-    orders: [{type: mongoose.SchemaTypes.ObjectId, ref: "products"}]
+    orders: [{type: mongoose.SchemaTypes.ObjectId, ref: "product"}]
 
 }, {timestamps: true})
 
-const User = mongoose.model<IUser>("user", userSchema)
-
+const User = mongoose.model("user", userSchema)
 
 // module.exports.User = User
 export default User
