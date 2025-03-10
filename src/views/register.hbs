@@ -1,0 +1,40 @@
+<div class="container">
+    <form class="signup_form" action="/register" method="post" novalidate>
+        <h2>Register</h2>
+
+        {{#if errors}}
+            {{#each errors}}
+                <h3 style="text-align: center; color: red"> {{this}}</h3>
+            {{/each}}
+        {{/if}}
+        <div class="form-group">
+            <label for="username">Firstname</label>
+            <input type="text" id="username" placeholder="John" name="firstname" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Lastname</label>
+            <input type="text" id="username" placeholder="Doe" name="lastname" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="example@mail.com" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" placeholder="+998 123 45 67" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="password2">Confirm password</label>
+            <input type="password" id="password2" name="password2" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Register</button>
+            <a href="/login">Have an account? Login</a>
+        </div>
+    </form>
+    <div id="message"></div>
+</div>

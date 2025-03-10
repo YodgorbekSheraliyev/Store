@@ -1,12 +1,13 @@
-import { config } from "dotenv";
 import express, { Request, Response } from "express";
-import path from "path";
+import { config } from "dotenv";
 import { engine } from "express-handlebars";
-import { generateToken } from "./utils/jwt";
 import { authorized } from "./middlewares/auth.middleware";
 import session from "express-session";
 import MongoSession from 'connect-mongodb-session'
 import flash from "connect-flash";
+import path from "path";
+import authRouter from './routes/auth.route'
+import mongoose from "mongoose";
 
 
 const app = express();
@@ -46,27 +47,25 @@ app.set("views", path.join(__dirname, "views"));
 console.log(path.join(__dirname, "views"));
 
 
-app.get("/login", (req: Request, res: Response) => {
-  const errors = req.flash("loginError");
-  res.render("login", { errors , hideFooter: true});
-});
+app.use('/', authRouter)
 
-app.post("/login", (req: any, res: any) => {
-  const missingField = Object.values(req.body).some((field) => field == "");
-  if (missingField) {
-    req.flash("loginError", "Please fill all fields");
-    return res.redirect("/login");
-  }
-  const token = generateToken(req.body)
-  req.session.token = token
-  req.headers.authorization = `Bearer ${token}`
-  res.redirect("/home");
-});
+
 
 app.get("/home", authorized, (req, res) => {
   res.render("home");
 })
 
 const port: number | string = process.env.PORT || 3000;
+
+const connectDB  = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI).then(() => {console.log("Connected to DB")})
+  } catch (error) {
+    console.log(error.message);
+    
+  }
+}
+
+connectDB()
 
 app.listen(port, () => console.log(`http://localhost:${port}`));
