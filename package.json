@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/connect-flash": "^0.0.40",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
@@ -19,6 +20,8 @@
     "@types/express-session": "^1.18.1",
     "@types/express-validator": "^2.20.33",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/uuid": "^10.0.0",
+    "bcryptjs": "^3.0.2",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.7",
