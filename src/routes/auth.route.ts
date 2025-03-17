@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express"
+import express, { NextFunction, Request, Response } from "express"
 import { authorized } from "../middlewares/auth.middleware"
 import { generateToken } from "../utils/jwt"
 import User, { IUser } from "../models/user.model"
@@ -16,9 +16,19 @@ router.get('/register', (req: Request, res: Response) => {
     res.render('register', {title: "Register", errors,  hideFooter: true})
 })
 
+router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
+  req.session.destroy((err) => {
+    if (err) {
+      next(err)
+    }
+    res.redirect('/login')
+  })
+})
+
+
 router.post('/register', async (req: Request, res: Response) => {
     
-  const missingField = Object.values(req.body).some((field) => field == "");
+  const missingField = Object.values(req.body).some((field) => Boolean(field) == false);
     if (missingField) {
       req.flash("registerError", "Please fill all fields");
       return res.redirect("/register");
@@ -39,14 +49,12 @@ router.post('/register', async (req: Request, res: Response) => {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
         email: req.body.email,
-        phone: req.body.email,
+        phone: req.body.phone,
         password: await bcrypt.hash(req.body.password, 10),
     }
-
     const user  = await User.create(userData)
-    console.log(user);
     
-    const token = generateToken(user)
+    const token = generateToken({id: user._id.toString(), email: user.email, first_name: user.first_name, last_name: user.last_name})
     req.session.token = token
     req.headers.authorization = `Bearer ${token}`
     res.redirect("/home");
@@ -54,16 +62,20 @@ router.post('/register', async (req: Request, res: Response) => {
 })
 
 router.post("/login", async (req: Request, res: Response) => {
-    const missingField = Object.values(req.body).some((field) => field == "");
+    const missingField = Object.values(req.body).some((field) => Boolean(field) == false);
     if (missingField) {
       req.flash("loginError", "Please fill all fields");
       return res.redirect("/login");
     }
     const userExist = await User.findOne({email: req.body.email})
-    console.log(userExist);
     
     if(!userExist) {
         req.flash("loginError", "This user has not registered yet")
+        return res.redirect("/login")
+    }
+    const matchPassword = await bcrypt.compare(req.body.password, userExist.password)
+    if(!matchPassword) {
+        req.flash("loginError", "Invalid credentials")
         return res.redirect("/login")
     }
     const token = generateToken(req.body)

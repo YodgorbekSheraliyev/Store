@@ -7,6 +7,12 @@
   font-size: 20px;
   font-weight: 500;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 button {
   outline: none;
   border: none;
@@ -16,6 +22,7 @@ button:active {
 }
 
 .container {
+  flex: 1;
   max-width: 90vw;
   margin: 0 auto;
 }
@@ -33,6 +40,14 @@ button:active {
   --secondary-color: #56b280;
   --background-color: #ffffff;
 }
+
+.nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  opacity: 1;
+}
 #menuBtn {
   display: none;
   font-size: 2rem;
@@ -46,6 +61,11 @@ button:active {
   padding: 0.5rem;
   padding-left: 0;
   cursor: pointer;
+}
+
+.menu_wrapper a {
+  display: flex;
+  align-items: center;
 }
 .menu_wrapper span {
   color: var(--secondary-color);
@@ -276,6 +296,11 @@ button:active {
 }
 .product_left {
   background-color: #f7f8fa;
+  box-sizing: border-box;
+}
+
+.product_left img {
+  width: 100%;
 }
 .product_right {
   padding: 2rem;
@@ -409,6 +434,16 @@ td {
 #message {
   margin-top: 15px;
   text-align: center;
+}
+
+.not_found {
+  margin-top: 4.5rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.not_found h1 {
+  font-size: 4rem;
 }
 
 @media screen and (max-width: 576px) {

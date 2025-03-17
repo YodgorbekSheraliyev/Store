@@ -4,6 +4,12 @@ const minusButton = document.querySelector("#minusBtn");
 const plusButton = document.querySelector("#plusBtn");
 const itemAmount = document.querySelector(".quantity_form input");
 const button = document.createElement("button");
+const navbar = document.querySelector('.nav')
+const footer = document.querySelector('.footer')
+// const notFound = document.querySelector(".not_found")
+const notFound = document.createElement("nav")
+
+// notFound.style.height = notFound.offsetHeight + notFound.offsetHeight - 
 
 menuBtn.addEventListener("click", () => {
   navList.classList.toggle("active");
@@ -34,3 +40,4 @@ tBody.querySelectorAll('tr').forEach(tr => {
     })
   })
 })
+

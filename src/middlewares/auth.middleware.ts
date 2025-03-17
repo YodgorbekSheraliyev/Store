@@ -17,8 +17,15 @@ export const authorized = (req: Request, res: Response, next: NextFunction) => {
     }
 
     (req as any).user = decoded;
-    next(); // Move to next middleware
+    next(); 
   } catch (error) {
-    next(error); // Pass error to error-handling middleware
+    next(error);
   }
 };
+
+export const setLocals = (req: Request, res: Response, next: NextFunction) => {
+  res.locals.user = req.session.token
+  // console.log(res.locals);
+  
+  next()
+}

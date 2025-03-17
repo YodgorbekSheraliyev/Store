@@ -12,19 +12,34 @@
         <h3>Products</h3>
         <p>Order it for you or for your beloved ones </p>
         <div class="product_card-wrapper">
-            <div class="product_card">
-                <div class="product_card-header">
-                    <img src="/assets/image 1.png" alt="product image">
-                </div>
-                <div class="product_card-body">
-                    <p class="product_name">Spiced Mint</p>
-                    <h4 class="product_price">45000 so'm </h4>
-                    <div class="button_group">
-                        <a href="#"><button class="buy_button">Buy</button></a>
-                        <button class="save_button">Save</button>
+            {{#if products}}
+                {{#each products}}
+                    <div class="product_card">
+                        <div class="product_card-header">
+                            <a href="/product/{{_id}}">
+                                {{#if images}}
+                                    <img src="/{{images}}" alt="product image">
+                                {{else}}
+                                    <img src="/assets/default.webp" alt="product image">
+                                {{/if}}
+                            </a>
+                        </div>
+                        <div class="product_card-body">
+                            <p class="product_name">{{name}}</p>
+                            <h4 class="product_price">{{price}} so'm </h4>
+                            <div class="button_group">
+                                {{!-- <a href="#"><button class="buy_button">Buy</button></a> --}}
+                                <form action="/buy/{{_id}}" class="buy_button" method="post">
+                                    <button type="submit">Buy</button>
+                                </form>
+                                <button class="save_button">Save</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                {{/each}}
+            {{else}}
+            <h2>No products yet :(</h2>
+            {{/if}}
         </div>
     </menu>
 </div>

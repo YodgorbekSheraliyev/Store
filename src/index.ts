@@ -1,12 +1,14 @@
-import express, { Request, Response } from "express";
+import express, { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { config } from "dotenv";
 import { engine } from "express-handlebars";
-import { authorized } from "./middlewares/auth.middleware";
+import { authorized, setLocals } from "./middlewares/auth.middleware";
 import session from "express-session";
 import MongoSession from 'connect-mongodb-session'
 import flash from "connect-flash";
 import path from "path";
 import authRouter from './routes/auth.route'
+import cartRouter from './routes/cart.route'
+import productRouter from './routes/product.route'
 import mongoose from "mongoose";
 
 
@@ -21,7 +23,7 @@ const mongoStore = new MongoStore({
 
 //
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -32,6 +34,7 @@ app.use(
   })
 );
 app.use(flash());
+app.use(setLocals)
 
 // Public folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -41,6 +44,11 @@ app.engine("hbs", engine({
     extname: "hbs",
     layoutsDir: path.join(__dirname, "views", "layouts"),
     partialsDir: path.join(__dirname, "views", "partials"),
+    helpers: {
+      firstImage: function(images){
+        return images[0]
+      }
+    }
   })
 );
 app.set("views", path.join(__dirname, "views"));
@@ -48,11 +56,31 @@ console.log(path.join(__dirname, "views"));
 
 
 app.use('/', authRouter)
+app.use('/', productRouter)
+app.use('/', cartRouter)
+app.get("/home", (req, res) => {
+  const productError = req.flash('productError')
+  res.render("home", {error: productError});
+})
 
 
+// app.get("/home", authorized, (req, res) => {
+//   res.render("home");
+// })
 
-app.get("/home", authorized, (req, res) => {
-  res.render("home");
+app.use('/*', (req, res) => {
+  res.render('404', {title: "Page not found"})
+})
+
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+
+  console.log(err.message);
+  
+  res.status(500).json({
+    message: "Internal Server Error"
+  })
+  
 })
 
 const port: number | string = process.env.PORT || 3000;
