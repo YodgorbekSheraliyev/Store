@@ -14,8 +14,8 @@
             </p>
             <p class="product_right-price"> Price: <span >{{product.price}} so'm</span></p>
             
-            <form action="#" class="product_buy-form">
-            {{!-- <form action="/product/buy/{{_id}}" class="product_buy-form"> --}}
+            {{!-- <form action="#" class="product_buy-form"> --}}
+            <form action="/products/buy/{{product._id}}" method="post" class="product_buy-form">
             <label for="quantity">
                 Quantity
                 <input type="number"  name="amount" value="1" id="quantity">

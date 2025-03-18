@@ -14,29 +14,36 @@
                 </tr>
             </thead>
             <tbody class="tBody">
-                <tr>
-                    <td>
-                        <img src="/assets/image 1.png" class="cart_img" alt="Spiced Mint Candleaf" width="50">
-                    </td>
-                    <td >9.99</td>
-                    <td>
-                        <form class="quantity_form">
-                            <button type="button" id="minusBtn">-</button>
-                            <input type="text" value="10">
-                            <button type="button" id="plusBtn">+</button>
-                        </form>
-                    </td>
-                    <td class="totalPrice">$9.99</td>
-                    <td>
-                        <form>
-                            <button type="submit" style="color: red; border: none; background: none; cursor: pointer;">Remove</button>
-                        </form>
-                    </td>
-                </tr>
+              {{#if cartItems}}
+                {{#each cartItems.items}}
+                    <tr>
+                        <td>
+                            <img src="{{firstImage this.product.images}}" class="cart_img" alt="Spiced Mint Candleaf" width="50">
+                        </td>
+                        <td >{{this.product.price}}</td>
+                        <td>
+                                <input type="text" value="{{this.quantity}}" disabled class="quantity_form-input">
+                        </td>
+                        <td class="totalPrice">{{this.total_price}}</td>
+                        <td>
+                            <form >
+                                <button type="submit" style="color: red; border: none; background: none; cursor: pointer;">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
+              {{else}}
+              <tr  >
+                <td colspan="5" style="text-align: center; padding: 20px;">
+                <h2>You dont have orders yet (:</h2>
+              </td>
+              </tr>
+              {{/if}}  
                 
             </tbody>
+            
         </table>
-        <h3 class="cart_page-total">Sub-total: $9.99</h3>
+        <h3 class="cart_page-total">{{cartItems.total_price}}</h3>
         <button class="checkout-btn">Check-out</button>
     </div>
 </div>

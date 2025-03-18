@@ -57,7 +57,7 @@ console.log(path.join(__dirname, "views"));
 
 app.use('/', authRouter)
 app.use('/', productRouter)
-app.use('/', cartRouter)
+app.use('/', authorized, cartRouter)
 app.get("/home", (req, res) => {
   const productError = req.flash('productError')
   res.render("home", {error: productError});

@@ -4,6 +4,7 @@
 ./register
 ./product/:id
 ./cart
+./cart/delete
 ./profile
 
 
