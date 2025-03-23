@@ -50,8 +50,10 @@ try {
 }
 });
 
-// router.post('/checkout', (req, res) => {
-
-// })
+router.post('/checkout', async (req, res) => {
+    const user = (<any>req).user
+    const userCart = await Cart.findOne({user: user._id})
+    
+})
 
 export default router;
