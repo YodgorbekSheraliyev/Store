@@ -188,12 +188,22 @@ button:active {
   color: var(--background-color);
   font-size: 0.8rem;
 }
-.product_card-body .button_group button a {
+.product_card-body .button_group  a:active {
+  transform: scale(0.95);
+}
+.product_card-body .button_group  a {
+  display: inline-block;
+  border-radius: 10px;
   color: var(--background-color);
+  padding: 0.5rem 1rem;
+
 }
 
 .product_card-body .button_group .buy_button {
   background-color: var(--secondary-color);
+}
+.product_card-body .button_group .save_button {
+  background-color: yellowgreen;
 }
 /* feautures */
 

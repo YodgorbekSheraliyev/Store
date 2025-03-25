@@ -28,10 +28,10 @@
                             <p class="product_name">{{name}}</p>
                             <h4 class="product_price">{{price}} so'm </h4>
                                 {{!-- <a href="#"><button class="buy_button">Buy</button></a> --}}
-                                <a href="/products/{{_id}}" >
-                                    <button type="submit"  class="buy_button">Buy</button>
-                                    <button type='button'  "save_button">Save</button>
-                                </a>
+                                <div class="button_group">
+                                    <a href="/products/{{_id}}"  class="buy_button">Buy</a>
+                                    <a type="button" class="save_button">Save</a>
+                                </div>
                         </div>
                     </div>
                 {{/each}}

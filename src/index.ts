@@ -9,7 +9,8 @@ import path from "path";
 import authRouter from "./routes/auth.route";
 import cartRouter from "./routes/cart.route";
 import productRouter from "./routes/product.route";
-import mongoose from "mongoose";
+import connectDB from "./db";
+import  setupView  from "./utils/view-engine.config";
 
 const app = express();
 config();
@@ -28,7 +29,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 100 * 60 * 60 * 24 },
+    cookie: { maxAge: 100 * 60 * 60 * 24 * 15 },
     store: mongoStore,
   })
 );
@@ -38,22 +39,11 @@ app.use(setLocals);
 // Public folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.set("view engine", "hbs");
-app.engine(
-  "hbs",
-  engine({
-    extname: "hbs",
-    layoutsDir: path.join(__dirname, "views", "layouts"),
-    partialsDir: path.join(__dirname, "views", "partials"),
-    helpers: {
-      firstImage: function (images) {
-        return images[0];
-      },
-    },
-  })
-);
-app.set("views", path.join(__dirname, "views"));
-app.get("/", authorized, (req, res) => {
+// View Engine Config
+setupView(app, engine)
+
+
+app.get("/", (req, res) => {
   res.redirect("/products");
 });
 app.use("/auth", authRouter);
@@ -72,15 +62,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const port: number | string = process.env.PORT || 3000;
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI).then(() => {
-      console.log("Connected to DB");
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
 
 connectDB();
 

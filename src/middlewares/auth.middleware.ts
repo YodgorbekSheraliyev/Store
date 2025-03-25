@@ -25,21 +25,6 @@ export const authorized = async (req, res, next) => {
   }
 };
 
-// export const authorized = (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     (req as any).user = {
-//       _id:"67d93efb68c5ed45ac9f853f",
-//       email: 'yodgorbeksheraliyev777@gmail.com',
-//       password: '1',
-//       iat: 1742814749
-//     };
-//     console.log((<any>req).user);
-    
-//     next(); 
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 export const setLocals = (req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.session.token
