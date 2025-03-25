@@ -54,10 +54,10 @@ router.post('/register', async (req: Request, res: Response) => {
     }
     const user  = await User.create(userData)
     
-    const token = generateToken({id: user._id.toString(), email: user.email, first_name: user.first_name, last_name: user.last_name})
+    const token = generateToken({_id: user._id.toString(), email: user.email})
     req.session.token = token
     req.headers.authorization = `Bearer ${token}`
-    res.redirect("/home");
+    res.redirect("/products");
 
 })
 
@@ -65,23 +65,23 @@ router.post("/login", async (req: Request, res: Response) => {
     const missingField = Object.values(req.body).some((field) => Boolean(field) == false);
     if (missingField) {
       req.flash("loginError", "Please fill all fields");
-      return res.redirect("/login");
+      return res.redirect("/auth/login");
     }
     const userExist = await User.findOne({email: req.body.email})
     
     if(!userExist) {
         req.flash("loginError", "This user has not registered yet")
-        return res.redirect("/login")
+        return res.redirect("/auth/login")
     }
     const matchPassword = await bcrypt.compare(req.body.password, userExist.password)
     if(!matchPassword) {
         req.flash("loginError", "Invalid credentials")
-        return res.redirect("/login")
+        return res.redirect("/auth/login")
     }
-    const token = generateToken(req.body)
+    const token = generateToken({_id: userExist._id.toString(), email: userExist.email})
     req.session.token = token
     req.headers.authorization = `Bearer ${token}`
-    res.redirect("/home");
+    res.redirect("/products");
   });
 
 

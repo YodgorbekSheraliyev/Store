@@ -19,7 +19,7 @@ const userSchema: Schema = new mongoose.Schema({
     verify_email_token_time: {type: Number, default: 60*60*5},
     phone: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    orders: [{type: mongoose.SchemaTypes.ObjectId, ref: "product"}]
+    orders: [{type: mongoose.SchemaTypes.ObjectId, ref: "order"}]
 
 }, {timestamps: true})
 

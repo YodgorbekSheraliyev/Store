@@ -43,7 +43,14 @@
             </tbody>
             
         </table>
-        <h3 class="cart_page-total">{{cartItems.total_price}}</h3>
-        <button class="checkout-btn">Check-out</button>
+        <h3 class="cart_page-total" >{{cartItems.total_price}}</h3>
+        <form action="/cart/checkout" method="post">
+            {{#if cartItems.items.length}}
+                <button type="submit" class="checkout-btn">Check out</button>
+            {{else}}
+                <button class="checkout-btn" disabled >Check-out</button>
+                <button type="submit" class="checkout-btn" disabled>Check out</button>
+            {{/if}}
+        </form>
     </div>
 </div>

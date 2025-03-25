@@ -1,5 +1,5 @@
 <div class="container">
-    <form class="signup_form" action="/register" method="post" novalidate>
+    <form class="signup_form" action="/auth/register" method="post" novalidate>
         <h2>Register</h2>
 
         {{#if errors}}
@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <button type="submit">Register</button>
-            <a href="/login">Have an account? Login</a>
+            <a href="/auth/login">Have an account? Login</a>
         </div>
     </form>
     <div id="message"></div>
