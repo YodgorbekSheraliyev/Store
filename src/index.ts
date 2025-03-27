@@ -11,6 +11,7 @@ import cartRouter from "./routes/cart.route";
 import productRouter from "./routes/product.route";
 import connectDB from "./db";
 import  setupView  from "./utils/view-engine.config";
+import { sendMail } from "./utils/mailer";
 
 const app = express();
 config();
@@ -50,7 +51,7 @@ app.get('/contact', (req, res) => {
   res.render('contact', {title: "Contact Us"})
 })
 
-app.post("/contact", (req, res) => {
+app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
@@ -58,8 +59,14 @@ app.post("/contact", (req, res) => {
     return res.redirect("/contact");
   }
 
-  // Simulating form processing
-  req.session.message = { type: "success", text: "Message sent successfully!" };
+  // Sending email
+  try {
+    await sendMail(email, message); 
+    req.session.message = { type: "success", text: "Message sent successfully!" };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    req.session.message = { type: "error", text: "Failed to send message. Please try again later." };
+  }
   res.redirect("/contact");
 });
 app.use("/auth", authRouter);
