@@ -25,9 +25,9 @@ export const authorized = async (req, res, next) => {
   }
 };
 
-
 export const setLocals = (req: Request, res: Response, next: NextFunction) => {
   res.locals.user = req.session.token
-  
-  next()
+  res.locals.message = req.session.message;
+  delete req.session.message; // Remove message after one use
+  next();
 }

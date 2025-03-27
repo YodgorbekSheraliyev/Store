@@ -46,6 +46,22 @@ setupView(app, engine)
 app.get("/", (req, res) => {
   res.redirect("/products");
 });
+app.get('/contact', (req, res) => {
+  res.render('contact', {title: "Contact Us"})
+})
+
+app.post("/contact", (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    req.session.message = { type: "error", text: "All fields are required!" };
+    return res.redirect("/contact");
+  }
+
+  // Simulating form processing
+  req.session.message = { type: "success", text: "Message sent successfully!" };
+  res.redirect("/contact");
+});
 app.use("/auth", authRouter);
 app.use("/products", productRouter);
 app.use("/cart", authorized, cartRouter);
