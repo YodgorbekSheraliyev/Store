@@ -1,0 +1,47 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "commonjs",
+    "scripts": {
+      "dev": "nodemon --exec ts-node src/index.ts",
+      "build": "tsc",
+      "prod": "nodemon dist/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+      "@types/bcryptjs": "^2.4.6",
+      "@types/connect-flash": "^0.0.40",
+      "@types/dotenv": "^6.1.1",
+      "@types/express": "^5.0.0",
+      "@types/express-handlebars": "^5.3.1",
+      "@types/express-session": "^1.18.1",
+      "@types/express-validator": "^2.20.33",
+      "@types/jsonwebtoken": "^9.0.9",
+      "@types/multer": "^1.4.12",
+      "@types/nodemailer": "^6.4.17",
+      "@types/uuid": "^10.0.0",
+      "bcryptjs": "^3.0.2",
+      "connect-flash": "^0.1.1",
+      "connect-mongodb-session": "^5.0.0",
+      "dotenv": "^16.4.7",
+      "express": "^4.21.2",
+      "express-handlebars": "^8.0.1",
+      "express-session": "^1.18.1",
+      "express-validator": "^7.2.1",
+      "handlebars": "^4.7.8",
+      "jsonwebtoken": "^9.0.2",
+      "mongodb": "^6.14.2",
+      "mongoose": "^8.12.1",
+      "multer": "^1.4.5-lts.2",
+      "nodemailer": "^6.10.0",
+      "nodemon": "^3.1.9",
+      "ts-node": "^10.9.2",
+      "uuid": "^11.1.0"
+    },
+    "devDependencies": {
+      "@types/mongoose": "^5.11.96"
+    }
+  }
