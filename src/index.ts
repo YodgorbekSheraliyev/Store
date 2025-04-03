@@ -83,7 +83,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const port: number | string = process.env.PORT || 3000;
+const port: number | string = process.env.PORT || 4000;
 
 
 connectDB();
